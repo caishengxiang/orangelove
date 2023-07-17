@@ -1,0 +1,9 @@
+pytest
+pandas
+numpy
+fastapi
+python-multipart
+uvicorn[standard]
+SQLAlchemy
+psycopg2-binary
+redis
