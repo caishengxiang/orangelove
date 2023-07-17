@@ -4,6 +4,6 @@ numpy
 fastapi
 python-multipart
 uvicorn[standard]
-SQLAlchemy
+sqlalchemy[asyncio]
 psycopg2-binary
 redis

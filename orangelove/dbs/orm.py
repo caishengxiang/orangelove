@@ -8,7 +8,7 @@ import json
 import asyncio
 from datetime import datetime
 from sqlalchemy import JSON,Column
-from sqlalchemy import INTEGER, VARCHAR,ARRAY,BOOLEAN,TIMESTAMP
+from sqlalchemy import INTEGER, VARCHAR,ARRAY,BOOLEAN,TIMESTAMP,String
 from sqlalchemy import func
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import declarative_base
@@ -52,13 +52,13 @@ class User(Base):
     # 修改时间
     update_time = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), comment='修改时间')
 
-    def get_permissions_list(self):
-        """因sqlalchemy内部原因,函数不能命名为 permissions/get_permissions"""
-        permission_codes = []
-        for role_id in self.role_ids:
-            role = g.db.query(Role).filter(Role.role_id == role_id).first()
-            permission_codes.extend(getattr(role, 'permission_codes', []))
-        return permission_codes
+    # def get_permissions_list(self):
+    #     """因sqlalchemy内部原因,函数不能命名为 permissions/get_permissions"""
+    #     permission_codes = []
+    #     for role_id in self.role_ids:
+    #         role = g.db.query(Role).filter(Role.role_id == role_id).first()
+    #         permission_codes.extend(getattr(role, 'permission_codes', []))
+    #     return permission_codes
 
     # @classmethod
     # def set_user_info(cls, user_model=None, user_id=None, token=None):
@@ -84,7 +84,7 @@ class User(Base):
     #     return user_info
 
 
-class Role(CustomModel):
+class Role(Base):
     """ 角色
     """
     __tablename__ = 'us_role'
@@ -95,7 +95,7 @@ class Role(CustomModel):
     remark = Column(VARCHAR(3000), nullable=False, server_default='', comment='备注')
 
 
-class Permission(CustomModel):
+class Permission(Base):
     """ 权限
     """
     __tablename__ = "us_permission"
